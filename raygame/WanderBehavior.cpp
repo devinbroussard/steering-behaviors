@@ -8,28 +8,39 @@
 
 WanderBehavior::WanderBehavior(float radius, float distance)
 {
+	std::srand((time(NULL)));
 	m_radius = radius;
 	m_distance = distance;
-	m_force = 200;
+	m_force = 20;
+	m_angle = { 0, 0 };
 }
 
 void WanderBehavior::update(float deltaTime)
 {
-	std::srand(time(NULL));
 
 	MathLibrary::Vector2 circlePos = getOwner()->getTransform()->getWorldPosition() + (getOwner()->getTransform()->getForward() * m_distance);
-	MathLibrary::Vector2 randomPnt = (MathLibrary::Vector2(((double) rand() / (RAND_MAX + 1)), (double)rand() / (RAND_MAX + 1))).getNormalized() * m_radius;
+
+	float randX = float(rand() % 10 + -5) / float((RAND_MAX)) * 2;
+	float randY = float(rand() % 10 + -5) / float((RAND_MAX)) * 2;
+
+
+	MathLibrary::Vector2 randomPnt = MathLibrary::Vector2(randX, randY).getNormalized() * m_radius; 
 	randomPnt = randomPnt + circlePos;
 
 
-	MathLibrary::Vector2 direction =
+	MathLibrary::Vector2 angle =
 		(randomPnt - getOwner()->getTransform()->getWorldPosition()).getNormalized() * m_force;
+
+	if ((angle - m_angle).getMagnitude() < 0.2f)
+		angle = angle + MathLibrary::Vector2(0.01f, 0.02f);
+
+	m_angle = angle;
 
 	MoveComponent* moveComponent = dynamic_cast<MoveComponent*>(getOwner()->getComponent("MoveComponent"));
 
-	getOwner()->getTransform()->setForward(direction);
+	getOwner()->getTransform()->setForward(m_angle);
 
-	MathLibrary::Vector2 newVelocity = direction - moveComponent->getVelocity();
+	MathLibrary::Vector2 newVelocity = m_angle - moveComponent->getVelocity();
 
 	moveComponent->setVelocity(moveComponent->getVelocity() + newVelocity * deltaTime);
 }
