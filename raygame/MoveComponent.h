@@ -35,6 +35,7 @@ public:
 	void update(float deltaTime) override;
 
 private:
+
 	MathLibrary::Vector2 m_velocity;
 	float m_maxSpeed;
 };
