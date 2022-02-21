@@ -13,7 +13,9 @@ void SeekBehavior::update(float deltaTime)
 	MathLibrary::Vector2 direction =
 		(getTarget()->getTransform()->getWorldPosition() - getOwner()->getTransform()->getWorldPosition()).getNormalized();
 
-	direction = direction * m_force;
+	direction = (direction * m_force) * deltaTime;
 
-	getOwner()->getComponent("MoveComponent").
+	MoveComponent* moveComponent = dynamic_cast<MoveComponent*>(getOwner()->getComponent("MoveComponent"));
+
+	moveComponent->setVelocity(moveComponent->getVelocity() + direction);
 }
