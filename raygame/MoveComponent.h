@@ -19,7 +19,7 @@ public:
 	/// Set the current speed and direction of this actor
 	/// </summary>
 	/// <param name="velocity"></param>
-	void setVelocity(MathLibrary::Vector2 velocity) { m_velocity = velocity; }
+	void setVelocity(MathLibrary::Vector2 velocity) {  m_velocity = velocity; }
 
 	/// <summary>
 	/// Get the maximum magnitude of this actors velocity vector

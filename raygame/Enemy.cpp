@@ -1,5 +1,7 @@
 #include "Enemy.h"
 #include "SeekBehavior.h"
+#include "FleeBehavior.h"
+#include "WanderBehavior.h"
 
 Enemy::Enemy(float x, float y, const char* name, float speed, int maxHealth, Actor* targetActor) :
 	Character::Character(x, y, name, speed, maxHealth)
@@ -10,7 +12,9 @@ Enemy::Enemy(float x, float y, const char* name, float speed, int maxHealth, Act
 void Enemy::start()
 {
 	Character::start();
-	SeekBehavior* seekBehavior = new SeekBehavior(m_targetActor);
+	WanderBehavior* wanderBehavior = new WanderBehavior(500, 5);
+	addComponent(wanderBehavior);
 
-	addComponent(seekBehavior);
+	/*SeekBehavior* seekBehavior = new SeekBehavior(m_targetActor);
+	addComponent(seekBehavior);*/
 }

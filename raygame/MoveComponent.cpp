@@ -5,12 +5,16 @@
 
 MoveComponent::MoveComponent(const char* name) : Component::Component(name)
 {
-	m_maxSpeed = 0;
+	m_maxSpeed = 200;
 	m_velocity = MathLibrary::Vector2(0, 0);
 }
 
 void MoveComponent::update(float deltaTime)
 {
+	if (m_velocity.getMagnitude() > m_maxSpeed) {
+		m_velocity = m_velocity.getNormalized() * m_maxSpeed;
+	}
+
 	MathLibrary::Vector2 oldPosition = getOwner()->getTransform()->getLocalPosition();
 	MathLibrary::Vector2 forward = getOwner()->getTransform()->getForward();
 

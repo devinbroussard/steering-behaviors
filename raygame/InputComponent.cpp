@@ -18,5 +18,6 @@ MathLibrary::Vector2 InputComponent::getMoveAxis()
 
 void InputComponent::update(float deltaTime)
 {
-	getOwner()->getTransform()->setForward(getMoveAxis());
+	if (getMoveAxis().getMagnitude() > 0)
+		getOwner()->getTransform()->setForward(getMoveAxis());
 }
