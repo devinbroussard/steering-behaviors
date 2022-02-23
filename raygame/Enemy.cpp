@@ -4,6 +4,7 @@
 #include "WanderBehavior.h"
 #include "Transform2D.h"
 #include "Engine.h"
+#include <Vector2.h>
 
 Enemy::Enemy(float x, float y, const char* name, float speed, int maxHealth, Actor* targetActor) :
 	Character::Character(x, y, name, speed, maxHealth)
@@ -14,7 +15,10 @@ Enemy::Enemy(float x, float y, const char* name, float speed, int maxHealth, Act
 void Enemy::start()
 {
 	Character::start();
-	WanderBehavior* wanderBehavior = new WanderBehavior(30, 10000);
+
+	//getTransform()->setForward(MathLibrary::Vector2(-1, 0));
+
+	WanderBehavior* wanderBehavior = new WanderBehavior(40, 10500);
 	addComponent(wanderBehavior);
 
 	/*SeekBehavior* seekBehavior = new SeekBehavior(m_targetActor);
@@ -23,10 +27,7 @@ void Enemy::start()
 
 void Enemy::update(float deltaTime)
 {
-	if (getTransform()->getWorldPosition().x > Engine::getScreenWidth())
-		getTransform()->setWorldPostion({ -5, getTransform()->getWorldPosition().y });
-	if (getTransform()->getWorldPosition().y > Engine::getScreenHeight())
-		getTransform()->setWorldPostion({ getTransform()->getWorldPosition().x, -5});
+
 
 	Character::update(deltaTime);
 

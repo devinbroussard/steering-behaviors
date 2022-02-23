@@ -2,6 +2,8 @@
 #include "Actor.h"
 #include "Component.h"
 #include "Character.h"
+#include "Engine.h"
+#include "Transform2D.h"
 
 MoveComponent::MoveComponent(const char* name) : Component::Component(name)
 {
@@ -11,6 +13,19 @@ MoveComponent::MoveComponent(const char* name) : Component::Component(name)
 
 void MoveComponent::update(float deltaTime)
 {
+
+	float xEnd = Engine::getScreenWidth() + 5;
+	float yEnd = Engine::getScreenHeight() + 5;
+
+	if (getOwner()->getTransform()->getWorldPosition().x > Engine::getScreenWidth() + 5)
+		getOwner()->getTransform()->setWorldPostion({ 0, getOwner()->getTransform()->getWorldPosition().y });
+	if (getOwner()->getTransform()->getWorldPosition().x < -10)
+		getOwner()->getTransform()->setWorldPostion({ xEnd, getOwner()->getTransform()->getWorldPosition().y });
+	if (getOwner()->getTransform()->getWorldPosition().y > Engine::getScreenHeight() + 5)
+		getOwner()->getTransform()->setWorldPostion({ getOwner()->getTransform()->getWorldPosition().x, -5 });
+	if (getOwner()->getTransform()->getWorldPosition().y < -10)
+		getOwner()->getTransform()->setWorldPostion({ getOwner()->getTransform()->getWorldPosition().x, yEnd });
+
 	if (m_velocity.getMagnitude() > m_maxSpeed) {
 		m_velocity = m_velocity.getNormalized() * m_maxSpeed;
 	}

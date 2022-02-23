@@ -11,7 +11,7 @@ WanderBehavior::WanderBehavior(float radius, float distance)
 	std::srand((time(NULL)));
 	m_radius = radius;
 	m_distance = distance;
-	m_force = 20;
+	m_force = 50;
 	m_angle = { 0, 0 };
 }
 
@@ -20,8 +20,8 @@ void WanderBehavior::update(float deltaTime)
 
 	MathLibrary::Vector2 circlePos = getOwner()->getTransform()->getWorldPosition() + (getOwner()->getTransform()->getForward() * m_distance);
 
-	float randX = float(rand() % 10 + -5) / float((RAND_MAX)) * 2;
-	float randY = float(rand() % 10 + -5) / float((RAND_MAX)) * 2;
+	float randX = (rand() % 400) - 200;
+	float randY = (rand() % 400) - 200;
 
 
 	MathLibrary::Vector2 randomPnt = MathLibrary::Vector2(randX, randY).getNormalized() * m_radius; 
@@ -31,8 +31,8 @@ void WanderBehavior::update(float deltaTime)
 	MathLibrary::Vector2 angle =
 		(randomPnt - getOwner()->getTransform()->getWorldPosition()).getNormalized() * m_force;
 
-	if ((angle - m_angle).getMagnitude() < 0.2f)
-		angle = angle + MathLibrary::Vector2(0.01f, 0.02f);
+	//if ((m_angle - angle).getMagnitude() < 0.5f)
+	//	angle = angle + MathLibrary::Vector2(0.2f, 0.8f);
 
 	m_angle = angle;
 
