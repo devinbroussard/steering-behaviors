@@ -11,13 +11,13 @@ WanderBehavior::WanderBehavior(float radius, float distance)
 	std::srand((time(NULL)));
 	m_radius = radius;
 	m_distance = distance;
-	m_force = 50;
+	m_force = 70;
 	m_angle = { 0, 0 };
 }
 
 void WanderBehavior::update(float deltaTime)
 {
-
+	
 	MathLibrary::Vector2 circlePos = getOwner()->getTransform()->getWorldPosition() + (getOwner()->getTransform()->getForward() * m_distance);
 
 	float randX = (rand() % 400) - 200;
